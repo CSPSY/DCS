@@ -9,6 +9,7 @@
 ```
 # 前端
 cd packages/frontend
+npm install
 npm run dev
 ```
 
