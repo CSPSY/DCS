@@ -10,6 +10,20 @@ const routes = [
         meta: {
             title: '首页'
         }
+    },
+    {
+        path: '/config',
+        component: () => import('../views/config_view/Config.vue'),
+        meta: {
+            title: '配置'
+        }
+    },
+    {
+        path: '/site',
+        component: () => import('../views/site_view/Site.vue'),
+        meta: {
+            title: '站点'
+        }
     }
 ];
 

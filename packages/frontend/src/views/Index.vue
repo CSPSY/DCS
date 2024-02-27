@@ -8,9 +8,15 @@ import { EditPen }  from '@element-plus/icons-vue';
         <el-container>
             <el-header class="header">
                 <span class="title">DCS</span>
-                <el-button class="button" type="primary" text>首页</el-button>
-                <el-button class="button" type="primary" text>配置</el-button>
-                <el-button class="button" type="primary" text>站点</el-button>
+                <RouterLink :to="{ path: '/' }">
+                    <el-button style="background-color: #f2f3ff; color: #4e52d9;" class="button" type="primary" text>首页</el-button>
+                </RouterLink>
+                <RouterLink :to="{ path: '/config' }">
+                    <el-button class="button" type="primary" text>配置</el-button>
+                </RouterLink>
+                <RouterLink :to="{ path: '/site' }">
+                    <el-button class="button" type="primary" text>站点</el-button>
+                </RouterLink>
                 <el-button class="button">登录</el-button>
             </el-header>
             <el-main class="main">
