@@ -6,7 +6,7 @@
     <router-view></router-view>
 </template>
 
-<style scoped>
+<style>
 * {
     margin: 0;
     padding: 0;
@@ -14,6 +14,7 @@
     text-decoration: none;
     box-sizing: border-box;
 }
+
 a {
     text-decoration: none;
 }
