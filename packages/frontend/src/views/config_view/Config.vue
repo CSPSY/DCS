@@ -49,10 +49,10 @@ const tableData = [
         <el-container>
             <el-header class="header">
                 <span class="title">DCS</span>
-                <RouterLink :to="{ path: '/' }">
+                <RouterLink style="margin-right: 12px;" :to="{ path: '/' }">
                     <el-button class="button" type="primary" text>首页</el-button>
                 </RouterLink>
-                <RouterLink :to="{ path: '/config' }">
+                <RouterLink style="margin-right: 12px;" :to="{ path: '/config' }">
                     <el-button style="background-color: #f2f3ff; color: #4e52d9;" class="button" type="primary" text>配置</el-button>
                 </RouterLink>
                 <RouterLink :to="{ path: '/site' }">
