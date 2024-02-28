@@ -5,9 +5,42 @@ const inputSearch = ref('');
 
 const pageInfo = reactive({
     currentPage: 2,
-    pageSize: 6,
+    pageSize: 10,
     total: 20
 })
+
+const tableData = [
+  {
+    configValue: '个人简介',
+  },
+  {
+    configValue: 'easy version',
+  },
+  {
+    configValue: 'easy version',
+  },
+  {
+    configValue: 'easy version',
+  },
+  {
+    configValue: 'easy version',
+  },
+  {
+    configValue: 'easy version',
+  },
+  {
+    configValue: 'easy version',
+  },
+  {
+    configValue: 'easy version',
+  },
+  {
+    configValue: 'easy version',
+  },
+  {
+    configValue: 'easy version',
+  },
+];
 
 </script>
 
@@ -20,10 +53,10 @@ const pageInfo = reactive({
                     <el-button class="button" type="primary" text>首页</el-button>
                 </RouterLink>
                 <RouterLink style="margin-right: 12px;" :to="{ path: '/config' }">
-                    <el-button class="button" type="primary" text>配置</el-button>
+                    <el-button style="background-color: #f2f3ff; color: #4e52d9;" class="button" type="primary" text>配置</el-button>
                 </RouterLink>
                 <RouterLink :to="{ path: '/site' }">
-                    <el-button style="background-color: #f2f3ff; color: #4e52d9;" class="button" type="primary" text>站点</el-button>
+                    <el-button class="button" type="primary" text>站点</el-button>
                 </RouterLink>
                 <el-button class="button">登录</el-button>
             </el-header>
@@ -32,7 +65,7 @@ const pageInfo = reactive({
                     <el-card shadow="never">
                         <div class="banner-top">
                             <span class="titleSmall">
-                                我的站点
+                                我的配置
                             </span>
                             <el-button type="primary" plain>新建</el-button>
                         </div>
@@ -40,47 +73,27 @@ const pageInfo = reactive({
                     </el-card>
                 </div>
                 <div class="content-bottom">
-                    <div style="padding: 16px 0;">
-                    <el-row>
-                        <el-col
-                            v-for="(o, index) in 5"
-                            :key="o"
-                            :span="8"
-                            style="padding: 0 12px; margin-bottom: 32px;"
-                        >
-                            <el-card
-                                :body-style="{
-                                    padding: '0px 12px', display: 'flex', alignItems: 'center', height: '100%', fontSize: '14px'
-                                }"
-                                shadow="never"
-                            >
-                                <template #header>
-                                    <div class="card-header">
-                                        <span>站点</span>
-                                        <el-button class="button" text>操作</el-button>
-                                    </div>
+                    <el-card shadow="never" style="margin-bottom: 14px;">
+                        <el-table :data="tableData" style="width: 100%;" :show-header="false">
+                            <el-table-column prop="configValue" label="配置" />
+                            <el-table-column align="right" label="操作" >
+                                <template #default>
+                                    <el-button link type="primary" size="small">编辑</el-button>
+                                    <el-button link type="primary" size="small">详情</el-button>
+                                    <el-button link type="primary" size="small">删除</el-button>
                                 </template>
-                                <div style="padding: 14px; display: flex; flex-direction: column; width: 100%;">
-                                    <div style="margin-bottom: 14px; display: flex; justify-content: space-between;">
-                                        <el-tag :disable-transitions="true" type="success">域名</el-tag>
-                                        <span >http://localhost:8081/</span>
-                                    </div>
-                                    <div style="display: flex; justify-content: space-between;">
-                                        <el-tag :disable-transitions="true" type="success">配置数</el-tag>
-                                        <span>1</span>
-                                    </div>
-                                </div>
-                            </el-card>
-                        </el-col>
-                    </el-row>
+                            </el-table-column>
+                        </el-table>
+                    </el-card>
                     <el-pagination
-                        layout="total, prev, pager, next, jumper" :total="pageInfo.total"
-                        :page-size="pageInfo.pageSize"
                         v-model:current-page="pageInfo.currentPage"
+                        v-model:page-size="pageInfo.pageSize"
+                        :disabled="false"
+                        layout="total, prev, pager, next, jumper"
+                        :total="pageInfo.total"
                         @current-change=""
                     />
                 </div>
-            </div>
             </el-main>
             <el-footer class="footer">
                 DCS 动态配置系统
@@ -103,6 +116,7 @@ const pageInfo = reactive({
     padding: 0 12px;
     margin-right: 32px;
 }
+
 .button:last-child {
     margin-left: auto;
 }
@@ -168,12 +182,5 @@ const pageInfo = reactive({
 .button:focus,
 .button:hover {
     color: #0052d9;
-}
-
-.el-card ::v-deep .el-card__header {
-    padding-top: 0px;
-    padding-bottom: 0px;
-    height: 56px;
-    line-height: 56px;
 }
 </style>

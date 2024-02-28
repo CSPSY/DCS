@@ -1,5 +1,6 @@
 <script setup>
 import { reactive, ref } from 'vue';
+import { jumpConfigCreate } from '../../utils';
 
 const inputSearch = ref('');
 
@@ -67,7 +68,7 @@ const tableData = [
                             <span class="titleSmall">
                                 我的配置
                             </span>
-                            <el-button type="primary" plain>新建</el-button>
+                            <el-button type="primary" @click="jumpConfigCreate" plain>新建</el-button>
                         </div>
                         <el-input v-model="inputSearch" placeholder="输入关键词，回车查找配置" clearable />
                     </el-card>
@@ -80,7 +81,7 @@ const tableData = [
                                 <template #default>
                                     <el-button link type="primary" size="small">编辑</el-button>
                                     <el-button link type="primary" size="small">详情</el-button>
-                                    <el-button link type="primary" size="small">删除</el-button>
+                                    <el-button link type="danger" size="small">删除</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>

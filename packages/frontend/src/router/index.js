@@ -19,6 +19,20 @@ const routes = [
         }
     },
     {
+        path: '/config/create',
+        component: () => import('../views/config_view/ConfigCreate.vue'),
+        meta: {
+            title: '配置创建'
+        }
+    },
+    {
+        path: '/config/edit',
+        component: () => import('../views/config_view/ConfigEdit.vue'),
+        meta: {
+            title: '配置编辑'
+        }
+    },
+    {
         path: '/site',
         component: () => import('../views/site_view/Site.vue'),
         meta: {
