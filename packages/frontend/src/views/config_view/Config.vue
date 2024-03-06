@@ -2,6 +2,10 @@
 import { reactive, ref } from 'vue';
 import { jumpConfigCreate } from '../../utils';
 
+defineOptions({
+    name: 'Config'
+});
+
 const inputSearch = ref('');
 
 const pageInfo = reactive({

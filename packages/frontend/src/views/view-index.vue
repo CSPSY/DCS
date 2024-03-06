@@ -3,6 +3,10 @@ import { EditPen }  from '@element-plus/icons-vue';
 import { router } from '../router';
 import { jumpConfigCreate, jumpSite } from '../utils';
 
+defineOptions({
+    name: 'ViewIndex'
+});
+
 </script>
 
 <template>
@@ -56,7 +60,7 @@ import { jumpConfigCreate, jumpSite } from '../utils';
                                     <template #header>
                                         <div class="card-header" style="font-weight: 600;">
                                             <span>创建配置</span>
-                                            <el-button class="button" text
+                                            <el-button style="height: 0;" class="button" text
                                                 @click="jumpConfigCreate"
                                             >
                                                 <el-icon><EditPen /></el-icon>
@@ -73,7 +77,7 @@ import { jumpConfigCreate, jumpSite } from '../utils';
                                     <template #header>
                                         <div class="card-header" style="font-weight: 600;">
                                             <span>创建站点</span>
-                                            <el-button class="button" text
+                                            <el-button style="height: 0;" class="button" text
                                                 @click="jumpSite"
                                             >
                                                 <el-icon><EditPen /></el-icon>

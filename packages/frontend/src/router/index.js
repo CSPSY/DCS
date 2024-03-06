@@ -6,35 +6,35 @@ import { createRouter, createWebHistory } from "vue-router";
 const routes = [
     {
         path: '/',
-        component: () => import('../views/Index.vue'),
+        component: () => import('../views/view-index.vue'),
         meta: {
             title: '首页'
         }
     },
     {
         path: '/config',
-        component: () => import('../views/config_view/Config.vue'),
+        component: () => import('../views/config_view/config.vue'),
         meta: {
             title: '配置'
         }
     },
     {
         path: '/config/create',
-        component: () => import('../views/config_view/ConfigCreate.vue'),
+        component: () => import('../views/config_view/config-create.vue'),
         meta: {
             title: '配置创建'
         }
     },
     {
         path: '/config/edit',
-        component: () => import('../views/config_view/ConfigEdit.vue'),
+        component: () => import('../views/config_view/config-edit.vue'),
         meta: {
             title: '配置编辑'
         }
     },
     {
         path: '/site',
-        component: () => import('../views/site_view/Site.vue'),
+        component: () => import('../views/site_view/site.vue'),
         meta: {
             title: '站点'
         }

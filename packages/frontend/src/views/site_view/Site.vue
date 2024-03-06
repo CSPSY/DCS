@@ -1,6 +1,10 @@
 <script setup>
 import { reactive, ref, nextTick } from 'vue';
 
+defineOptions({
+    name: 'Site'
+});
+
 const inputSearch = ref('');
 
 const pageInfo = reactive({
@@ -103,6 +107,7 @@ const handleInputConfirm = () => {
                             <!-- 新建站点 -->
                             <el-button type="primary" plain @click="dialogSiteNewVisible = true">新建</el-button>
                             <el-dialog v-model="dialogSiteNewVisible" title="创建站点" width="600" draggable>
+                                
                                 <section class="input-area">
                                     <el-form :model="formData" :rules="formRules" ref="form" label-position="top">
                                         <el-form-item label="站点名" prop="siteName">
@@ -168,14 +173,28 @@ const handleInputConfirm = () => {
                         >
                             <el-card
                                 :body-style="{
-                                    padding: '0px 12px', display: 'flex', alignItems: 'center', height: '100%', fontSize: '14px'
+                                    padding: '0px 6px', display: 'flex', alignItems: 'center', height: '100%', fontSize: '14px'
                                 }"
                                 shadow="never"
                             >
                                 <template #header>
                                     <div class="card-header">
                                         <span>站点</span>
-                                        <el-button class="button" text>操作</el-button>
+                                        <!-- <el-button class="button" text>操作</el-button> -->
+                                        <el-popover
+                                            placement="bottom-start"
+                                            :width="120"
+                                            trigger="hover"
+                                        >
+                                            <template #reference>
+                                                <el-button style="padding: 0; color: #0052d9;" text>操作</el-button>
+                                            </template>
+                                            <div style="display: flex; flex-direction: column;">
+                                                <el-button style="margin: 0;" text>编辑</el-button>
+                                                <el-button style="margin: 0;" text>详情</el-button>
+                                                <el-button style="margin: 0;" type="danger" text>删除</el-button>
+                                            </div>
+                                        </el-popover>
                                     </div>
                                 </template>
                                 <div style="padding: 14px; display: flex; flex-direction: column; width: 100%;">

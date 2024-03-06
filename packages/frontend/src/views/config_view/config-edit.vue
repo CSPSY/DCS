@@ -1,6 +1,10 @@
 <script setup>
 import { reactive, ref } from 'vue';
 
+defineOptions({
+    name: 'ConfigEdit'
+});
+
 const inputSearch = ref('');
 
 const pageInfo = reactive({
