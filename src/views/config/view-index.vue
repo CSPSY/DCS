@@ -2,10 +2,6 @@
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-defineOptions({
-    name: 'Config'
-});
-
 const router = useRouter();
 const jumpConfigCreate = () => {
     router.push('/config/create');

@@ -18,7 +18,7 @@ const router = useRouter();
         >
             <el-button class="button" type="primary" text>{{ menu.label }}</el-button>
         </div>
-        <el-button class="button">登录</el-button>
+        <el-button class="button" @click="router.push('/sign-in')">登录</el-button>
     </div>
 </template>
 

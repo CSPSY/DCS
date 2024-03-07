@@ -1,10 +1,6 @@
 <script setup>
 import { reactive, ref, nextTick } from 'vue';
 
-defineOptions({
-    name: 'Site'
-});
-
 const inputSearch = ref('');
 
 const pageInfo = reactive({

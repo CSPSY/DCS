@@ -1,7 +1,8 @@
 /**
  * @description 路由配置
  */
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router';
+import { useGlobalStore } from '@/stores/store.js';
 
 const routes = [
     {
@@ -10,6 +11,22 @@ const routes = [
         component: () => import('@/views/view-index.vue'),
         meta: {
             title: '首页'
+        }
+    },
+    {
+        path: '/sign-in',
+        name: 'sign-in',
+        component: () => import('@/views/users/sign-in.vue'),
+        meta: {
+            title: '用户登录'
+        }
+    },
+    {
+        path: '/sign-up',
+        name: 'sign-up',
+        component: () => import('@/views/users/sign-up.vue'),
+        meta: {
+            title: '用户注册'
         }
     },
     {
@@ -51,6 +68,7 @@ const routes = [
     },
     {
         path: '/site',
+        name: 'site',
         component: () => import('@/views/site/view-index.vue'),
         meta: {
             title: '站点'
@@ -64,11 +82,19 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    // 是否展示页面头部，尾部，   登录、注册部分不展示
+    const { menuStore } = useGlobalStore();
+    if (to.name === 'sign-in' || to.name === 'sign-up') {
+        menuStore.setShowValue(false);
+    } else {
+        menuStore.setShowValue(true);
+    }
+
     // 路由发送变化时，更改页面 title
     if (to.meta.title) {
-        document.title = 'DCS | ' + to.meta.title
+        document.title = 'DCS | ' + to.meta.title;
     }
-    next()
+    next();
 });
 
 export { router };

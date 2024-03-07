@@ -2,10 +2,6 @@
 import { EditPen }  from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
 
-defineOptions({
-    name: 'ViewIndex'
-});
-
 const router = useRouter();
 const jumpConfigCreate = () => {
     router.push('/config/create');

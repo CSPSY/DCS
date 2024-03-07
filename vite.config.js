@@ -24,7 +24,7 @@ export default defineConfig({
   server: {
     open: true,
     port: 8080,
-    inline: true,
+    inline: true
   },
   // 强制预构建插件包
   optimizeDeps: {
