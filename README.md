@@ -1,15 +1,10 @@
-# DCS
+# 介绍
 
-动态配置系统
-
-
+DCS --- 动态配置系统 前端部分
 
 ## 运行
 
 ```
-# 前端
-cd packages/frontend
 npm install
 npm run dev
 ```
-
