@@ -180,7 +180,6 @@ const handleInputConfirm = () => {
     margin-bottom: 1.25rem;
 }
 
-
 .input-area {
     margin-top: 12px;
     display: flex;
