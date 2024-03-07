@@ -1,12 +1,14 @@
 <script setup>
 import { MENU_LIST } from '../../utils/constants.js';
 import { useRouter } from 'vue-router';
+import { useGlobalStore } from '../../stores/store.js';
 
 defineOptions({
     name: 'HeaderNav'
 });
 
 const router = useRouter();
+const { userStore } = useGlobalStore();
 </script>
 
 <template>
@@ -18,7 +20,8 @@ const router = useRouter();
         >
             <el-button class="button" type="primary" text>{{ menu.label }}</el-button>
         </div>
-        <el-button class="button" @click="router.push('/sign-in')">登录</el-button>
+        <span class="button" v-if="userStore.isLogin">Hello</span>
+        <el-button v-else class="button" @click="router.push('/sign-in')">登录</el-button>
     </div>
 </template>
 

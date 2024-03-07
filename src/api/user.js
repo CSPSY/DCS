@@ -2,19 +2,26 @@
  * @description 用户接口
  */
 import axios from 'axios';
+import API from './base';
 
-const API = axios.create({
+const APILogin = axios.create({
     baseURL: 'https://h.exia.xyz',
 });
 
 // 登录
 const userSignIn = (postObj) => {
-    return API.post('/user/login', postObj);
+    return APILogin.post('/user/login', postObj);
 };
 
 // 注册
 const userSignUp = (postObj) => {
-    return API.post('/user/register', postObj);
+    return APILogin.post('/user/register', postObj);
+};
+
+// 获取用户信息
+const getUserData = (id) => {
+    return API.get(`/user/${id}`);
 };
 
 export { userSignIn, userSignUp };
+export { getUserData };

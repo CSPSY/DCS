@@ -1,6 +1,7 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import ConfigList from './components/config-list.vue';
 
 const router = useRouter();
 const jumpConfigCreate = () => {
@@ -13,41 +14,7 @@ const pageInfo = reactive({
     currentPage: 2,
     pageSize: 10,
     total: 20
-})
-
-const tableData = [
-  {
-    configValue: '个人简介',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-];
-
+});
 </script>
 
 <template>
@@ -55,9 +22,7 @@ const tableData = [
         <div class="content-top">
             <el-card shadow="never">
                 <div class="banner-top">
-                    <span class="titleSmall">
-                        我的配置
-                    </span>
+                    <span class="titleSmall">我的配置</span>
                     <el-button type="primary" @click="jumpConfigCreate" plain>新建</el-button>
                 </div>
                 <el-input v-model="inputSearch" placeholder="输入关键词，回车查找配置" clearable />
@@ -65,16 +30,7 @@ const tableData = [
         </div>
         <div class="content-bottom">
             <el-card shadow="never" style="margin-bottom: 14px;">
-                <el-table :data="tableData" style="width: 100%;" :show-header="false">
-                    <el-table-column prop="configValue" label="配置" />
-                    <el-table-column align="right" label="操作" >
-                        <template #default>
-                            <el-button link type="primary" size="small">编辑</el-button>
-                            <el-button link type="primary" size="small">详情</el-button>
-                            <el-button link type="danger" size="small">删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
+                <config-list />
             </el-card>
             <el-pagination
                 v-model:current-page="pageInfo.currentPage"
@@ -130,12 +86,6 @@ const tableData = [
     font-size: 1.5rem;
     font-weight: 400;
     margin-bottom: 12px;
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .button {

@@ -1,8 +1,8 @@
 /**
  * @description menu
  */
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
+import { ref } from 'vue';
+import { defineStore } from 'pinia';
 
 export const useMenuStore = defineStore('menu', () => {
   const show = ref(true);
@@ -11,5 +11,5 @@ export const useMenuStore = defineStore('menu', () => {
     show.value = val;
   };
 
-  return { show, setShowValue }
+  return { show, setShowValue };
 });

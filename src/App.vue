@@ -1,8 +1,10 @@
 <script setup>
+import { onMounted } from 'vue';
 import HeaderNav from '@/components/layout/header-nav.vue';
 import { useGlobalStore } from '@/stores/store.js';
+import { getUserData } from './api/user';
 
-const { menuStore } = useGlobalStore();
+const { menuStore, userStore } = useGlobalStore();
 </script>
 
 <template>
