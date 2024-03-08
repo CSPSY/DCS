@@ -25,15 +25,11 @@ const handleConfigCreate = async () => {
     if (!formRef.value) {
         return;
     }
-    try {
-        const isValid = await formRef.value.validate();   
-        if (isValid) {
-            emit('confirm');
-        } else {
-            throw new Error('请检查填写信息 ~');
-        }
-    } catch (err) {
-        ElMessage({ message: err?.msg || '请检查填写信息 ~', type: 'warning' });
+    const isValid = await formRef.value.validate();
+    if (isValid) {
+        emit('confirm');
+    } else {
+        throw new Error('请检查填写信息 ~');
     }
 };
 </script>

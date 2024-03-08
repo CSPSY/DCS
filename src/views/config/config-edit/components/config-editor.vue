@@ -1,19 +1,22 @@
 <script setup>
-import { reactive, ref, onMounted } from 'vue';
+import { ref, onMounted, shallowRef } from 'vue';
 import * as monaco from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import { useConfigStore } from '../store.js';
 
 defineOptions({
     name: 'ConfigEditor'
 });
 
+const configStore = useConfigStore();
+
 // 编辑器，Monaco Editor
 const editorRef = ref();
-let editor;
+const editor = shallowRef();
 
 onMounted(() => {
     self.MonacoEnvironment = {
@@ -34,11 +37,16 @@ onMounted(() => {
         }
     }
 
-    editor = monaco.editor.create(editorRef.value, {
-        value: '',
+    editor.value = monaco.editor.create(editorRef.value, {
+        value: configStore.content,
         language: 'json',
         theme: 'vs-dark',
         automaticLayout: true,
+    });
+    
+    // 监听编辑器内容的变化，并将内容更新到 configStore 里
+    editor.value.onDidChangeModelContent(() => {
+        configStore.updateContent(editor.value.getValue());
     });
 });
 </script>

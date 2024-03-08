@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, watch } from 'vue';
 import HeaderNav from '@/components/layout/header-nav.vue';
 import { useGlobalStore } from '@/stores/store.js';
 import { getUserData } from './api/user';
@@ -21,6 +21,14 @@ onMounted(() => {
     }
 });
 
+watch(
+    () => userStore.isLogin,
+    (newVal) => {
+        if (!newVal) {
+            router.push('/')
+        }
+    },
+);
 </script>
 
 <template>

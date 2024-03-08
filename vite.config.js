@@ -27,10 +27,17 @@ export default defineConfig({
     inline: true,
     // 开发环境，跨域配置
     proxy: {
-      '/dcs': {
+      '/user': {
         target: 'https://mdb.exia.xyz',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/dcs/, '')
+      },
+      '/config': {
+        target: 'https://mdb.exia.xyz',
+        changeOrigin: true,
+      },
+      '/site': {
+        target: 'https://mdb.exia.xyz',
+        changeOrigin: true,
       },
     }
   },
