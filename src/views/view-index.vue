@@ -20,13 +20,9 @@ const jumpSite = () => {
         <div class="content">
             <el-card class="box-card" shadow="never">
                 <template #header>
-                    <div class="card-header">
-                        <span>DCS</span>
-                    </div>
+                    <div class="card-header"><span>DCS</span></div>
                 </template>
-                <div>
-                    Dynamic Configuartion System，你可以快速建立动态配置并应用于你的站点。
-                </div>
+                <div>Dynamic Configuartion System，你可以快速建立动态配置并应用于你的站点。</div>
             </el-card>
             <section class="begin">
                 <h3>快速开始</h3>
@@ -34,13 +30,9 @@ const jumpSite = () => {
                     <el-col :span="8">
                         <el-card class="box-card" shadow="hover">
                             <template #header>
-                                <div class="card-header" style="font-weight: 600;">
-                                    <span>登录</span>
-                                </div>
+                                <div class="card-header" style="font-weight: 600;"><span>登录</span></div>
                             </template>
-                            <div style="font-size: 14px;">
-                                点击右上角以进行登录。
-                            </div>
+                            <div style="font-size: 14px;">点击右上角以进行登录。</div>
                         </el-card>
                     </el-col>
                     <el-col :span="8">

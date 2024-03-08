@@ -2,26 +2,33 @@
 import { MENU_LIST } from '../../utils/constants.js';
 import { useRouter } from 'vue-router';
 import { useGlobalStore } from '../../stores/store.js';
+import { ENV } from '../../utils/env.js';
 
 defineOptions({
     name: 'HeaderNav'
 });
 
 const router = useRouter();
-const { userStore } = useGlobalStore();
+const { userStore, menuStore } = useGlobalStore();
+
+// 登录，跳转到 SSO 登录中心
+const handleLogin = () => {
+    window.location.href = `https://${ENV.SSO}/callback/${ENV.SSO_ID}`;
+};
 </script>
 
 <template>
     <div class="header">
         <span class="title">DCS</span>
         <div style="margin-right: 12px;"
+            v-show="menuStore.show"
             v-for="menu in MENU_LIST" :key="menu.value"
             @click="router.push(menu.value)"
         >
             <el-button class="button" type="primary" text>{{ menu.label }}</el-button>
         </div>
         <span class="button" v-if="userStore.isLogin">Hello</span>
-        <el-button v-else class="button" @click="router.push('/sign-in')">登录</el-button>
+        <el-button v-else class="button" @click="handleLogin">登录</el-button>
     </div>
 </template>
 

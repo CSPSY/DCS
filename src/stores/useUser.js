@@ -25,7 +25,7 @@ export const useUserStore = defineStore('user', () => {
         userInfo.email = '';
         userInfo.id = 0;
         isLogin.value = false;
-        localStorage.removeItem('PS_TOKEN');
+        localStorage.removeItem('DCS_TOKEN');
     };
 
     return { isLogin, userInfo, login, logout };

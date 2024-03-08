@@ -14,19 +14,11 @@ const routes = [
         }
     },
     {
-        path: '/sign-in',
-        name: 'sign-in',
-        component: () => import('@/views/users/sign-in.vue'),
+        path: '/login',
+        name: 'login',
+        component: () => import('@/views/login-callback.vue'),
         meta: {
-            title: '用户登录'
-        }
-    },
-    {
-        path: '/sign-up',
-        name: 'sign-up',
-        component: () => import('@/views/users/sign-up.vue'),
-        meta: {
-            title: '用户注册'
+            title: '登录'
         }
     },
     {
@@ -82,9 +74,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    // 是否展示页面头部，尾部，   登录、注册部分不展示
+    // 是否展示顶部选项，   登录部分不展示
     const { menuStore } = useGlobalStore();
-    if (to.name === 'sign-in' || to.name === 'sign-up') {
+    if (to.name === 'login') {
         menuStore.setShowValue(false);
     } else {
         menuStore.setShowValue(true);

@@ -8,20 +8,12 @@ const APILogin = axios.create({
     baseURL: 'https://h.exia.xyz',
 });
 
-// 登录
-const userSignIn = (postObj) => {
-    return APILogin.post('/user/login', postObj);
-};
-
-// 注册
-const userSignUp = (postObj) => {
-    return APILogin.post('/user/register', postObj);
+// 校验 token
+export const validateToken = (dcsToken) => {
+    return API.get('user/validate', { headers: { Authorization: dcsToken } });
 };
 
 // 获取用户信息
-const getUserData = (id) => {
+export const getUserData = (id) => {
     return API.get(`/user/${id}`);
 };
-
-export { userSignIn, userSignUp };
-export { getUserData };

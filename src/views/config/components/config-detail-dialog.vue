@@ -1,6 +1,7 @@
 <script setup>
 import { watch, ref } from 'vue';
 import { CopyDocument } from '@element-plus/icons-vue';
+import copy from 'copy-to-clipboard';
 
 defineOptions({
     name: 'ConfigDetailDialog'
@@ -20,6 +21,11 @@ watch(
 const handleClose = () => {
     emit('closeDetailDialog');
 };
+
+const handleCopy = () => {
+    copy(`ddddddd`);
+    ElMessage({ message: '复制成功', type: 'success' });
+};
 </script>
 
 <template>
@@ -31,7 +37,7 @@ const handleClose = () => {
             <el-descriptions-item :span="2" label="创建于">11111</el-descriptions-item>
             <el-descriptions-item :span="2" label="上次修改于">No.1188,</el-descriptions-item>
             <el-descriptions-item :span="4" label="访问链接">
-                <el-link :icon="CopyDocument">djiqiojqdqoi.com</el-link>
+                <el-link :icon="CopyDocument" @click="handleCopy">ddddddddd</el-link>
             </el-descriptions-item>
         </el-descriptions>
     </el-dialog>
