@@ -3,10 +3,6 @@ import { EditPen }  from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const jumpConfigCreate = () => {
-    router.push('/config/create');
-};
-
 const jumpSite = () => {
     router.push('/site');
 };
@@ -41,7 +37,7 @@ const jumpSite = () => {
                                 <div class="card-header" style="font-weight: 600;">
                                     <span>创建配置</span>
                                     <el-button style="height: 0;" class="button" text
-                                        @click="jumpConfigCreate"
+                                        @click="router.push('/config/create')"
                                     >
                                         <el-icon><EditPen /></el-icon>
                                     </el-button>

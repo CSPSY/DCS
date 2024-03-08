@@ -1,19 +1,18 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useConfigList } from '../../hooks/useConfigList';
 import ConfigList from './components/config-list.vue';
 
+const {
+    configList: configData, configSearchText, configPagination,
+    refreshConfigList, onPageChange, handleSearch
+} = useConfigList();
+
 const router = useRouter();
-const jumpConfigCreate = () => {
-    router.push('/config/create');
-};
 
-const inputSearch = ref('');
-
-const pageInfo = reactive({
-    currentPage: 2,
-    pageSize: 10,
-    total: 20
+onMounted(() => {
+    refreshConfigList();
 });
 </script>
 
@@ -23,22 +22,22 @@ const pageInfo = reactive({
             <el-card shadow="never">
                 <div class="banner-top">
                     <span class="titleSmall">我的配置</span>
-                    <el-button type="primary" @click="jumpConfigCreate" plain>新建</el-button>
+                    <el-button type="primary" @click="router.push('/config/create')" plain>新建</el-button>
                 </div>
-                <el-input v-model="inputSearch" placeholder="输入关键词，回车查找配置" clearable />
+                <el-input v-model="configSearchText" placeholder="输入关键词，回车查找配置" @keyup.enter.native="handleSearch" clearable />
             </el-card>
         </div>
         <div class="content-bottom">
             <el-card shadow="never" style="margin-bottom: 14px;">
-                <config-list />
+                <config-list :data="configData" />
             </el-card>
             <el-pagination
-                v-model:current-page="pageInfo.currentPage"
-                v-model:page-size="pageInfo.pageSize"
+                v-model:current-page="configPagination.current"
+                v-model:page-size="configPagination.size"
                 :disabled="false"
                 layout="total, prev, pager, next, jumper"
-                :total="pageInfo.total"
-                @current-change=""
+                :total="configPagination.total"
+                @current-change="onPageChange"
             />
         </div>
     </div>

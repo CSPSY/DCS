@@ -2,68 +2,38 @@
 import { reactive, ref } from 'vue';
 import ConfigDetailDialog from './config-detail-dialog.vue';
 
-const detailDialogVisible = ref(false);
+defineOptions({
+    name: 'ConfigList'
+});
 
-const showDetailDialog = () => {
+const props = defineProps(['data']);
+
+const detailDialogVisible = ref(false);
+const detailItem = ref();
+
+const showDetailDialog = (item) => {
+    detailItem.value = item;
     detailDialogVisible.value = true;
 };
 
 const closeDetailDialog = () => {
     detailDialogVisible.value = false;
 };
-
-defineOptions({
-    name: 'ConfigList'
-});
-
-const tableData = [
-  {
-    configValue: '个人简介',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-  {
-    configValue: 'easy version',
-  },
-];
-
 </script>
 
 <template>
     <div class="main">
-        <el-table :data="tableData" style="width: 100%;" :show-header="false">
-            <el-table-column prop="configValue" label="配置" />
+        <el-table :data="props.data" style="width: 100%;" :show-header="false">
+            <el-table-column prop="name" label="配置" />
             <el-table-column align="right" label="操作" >
-                <template #default>
+                <template #default="{ row }">
                     <el-button link type="primary" size="small">编辑</el-button>
-                    <el-button link type="primary" size="small" @click="showDetailDialog">详情</el-button>
+                    <el-button link type="primary" size="small" @click="showDetailDialog(row)">详情</el-button>
                     <el-button link type="danger" size="small">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
-        <config-detail-dialog :detailDialogVisible="detailDialogVisible" @closeDetailDialog="closeDetailDialog" />
+        <config-detail-dialog :detailDialogVisible="detailDialogVisible" :data="detailItem" @closeDetailDialog="closeDetailDialog" />
     </div>
 </template>
 

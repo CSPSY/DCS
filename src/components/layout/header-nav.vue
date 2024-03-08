@@ -13,7 +13,7 @@ const { userStore, menuStore } = useGlobalStore();
 
 // 登录，跳转到 SSO 登录中心
 const handleLogin = () => {
-    window.location.href = `https://${ENV.SSO}/callback/${ENV.SSO_ID}`;
+    window.location.href = `${ENV.SSO}/callback/${ENV.SSO_ID}`;
 };
 </script>
 
