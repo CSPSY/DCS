@@ -8,9 +8,7 @@ const { userStore } = useGlobalStore();
 
 onMounted(() => {
     if (localStorage.getItem('DCS_TOKEN')) {
-        const id = localStorage.getItem('id');
-        console.log(id);
-        getUserData(id).then((res) => {
+        getUserData().then((res) => {
             if (res.data.code !== 0) {
                 return;
             }

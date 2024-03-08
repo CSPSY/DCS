@@ -24,7 +24,15 @@ export default defineConfig({
   server: {
     open: true,
     port: 8080,
-    inline: true
+    inline: true,
+    // 开发环境，跨域配置
+    proxy: {
+      '/dcs': {
+        target: 'https://mdb.exia.xyz',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/dcs/, '')
+      },
+    }
   },
   // 强制预构建插件包
   optimizeDeps: {

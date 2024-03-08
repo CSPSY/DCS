@@ -4,8 +4,14 @@
 import axios from 'axios';
 import { ENV } from '../utils/env';
 
+// SSO 登录
+const APISSO = axios.create({
+    baseURL: ENV.APISSO
+});
+
+// dcs 接口
 const API = axios.create({
-    baseURL: ENV.API,
+    baseURL: 'dcs'
 });
 
 // API 请求拦截器
@@ -17,4 +23,4 @@ API.interceptors.request.use((req) => {
     return req;
 });
 
-export default API;
+export { API, APISSO };

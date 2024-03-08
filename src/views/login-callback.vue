@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { validateToken } from '../api/user.js';
+import { userLogin } from '../api/user.js';
 import { useGlobalStore } from '../stores/store.js';
 
 const route = useRoute();
@@ -10,15 +10,13 @@ const router = useRouter();
 const { userStore } = useGlobalStore();
 
 const login = (ticket) => {
-    const dcsToken = `Bearer ${ticket}`;
-    
-    validateToken(dcsToken).then(res => {
+    userLogin(ticket).then(res => {
         if (res.data.code !== 0) {
             throw new Error(res.data.msg);
         }
-        userStore.login(res.data.data);
-        localStorage.setItem('DCS_TOKEN', dcsToken);
-        localStorage.setItem('id', res.data.data.id);
+
+        userStore.login(res.data.data.user);
+        localStorage.setItem('DCS_TOKEN', `Bearer ${res.data.data.token}`);
         ElMessage({ message: '登陆成功', type: 'success' });
         router.push('/');
     }).catch(err => {
