@@ -38,7 +38,7 @@ const handleCopy = () => {
             <el-descriptions-item :span="2" label="创建于">{{ props.data?.created_at || '-' }}</el-descriptions-item>
             <el-descriptions-item :span="2" label="上次修改于">{{ props.data?.updated_at || '-' }}</el-descriptions-item>
             <el-descriptions-item :span="4" label="访问链接">
-                <el-link :icon="CopyDocument" @click="handleCopy">{{ `${ENV.API}/config/get?slug=${props.data?.slug}` }}</el-link>
+                <el-link :icon="CopyDocument" @click="handleCopy">{{ `${ENV.API}/config/get?slug=${props.data?.slug || ''}` }}</el-link>
             </el-descriptions-item>
         </el-descriptions>
     </el-dialog>
