@@ -6,7 +6,7 @@ import ConfigList from './components/config-list.vue';
 
 const {
     configList: configData, configSearchText, configPagination,
-    refreshConfigList, onPageChange, handleSearch
+    refreshConfigList, onPageChange, handleSearch, handleDelete
 } = useConfigList();
 
 const router = useRouter();
@@ -29,7 +29,7 @@ onMounted(() => {
         </div>
         <div class="content-bottom">
             <el-card shadow="never" style="margin-bottom: 14px;">
-                <config-list :data="configData" />
+                <config-list :data="configData" @del="handleDelete"/>
             </el-card>
             <el-pagination
                 v-model:current-page="configPagination.current"

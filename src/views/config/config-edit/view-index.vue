@@ -1,10 +1,10 @@
 <script setup>
-import { reactive, ref, onMounted, computed } from 'vue';
+import { reactive, ref, onMounted, onUnmounted, computed } from 'vue';
 import ViewSider from './components/view-sider.vue';
 import ConfigEditor from './components/config-editor.vue';
 import { useRoute, useRouter } from 'vue-router'; 
 import { useConfigStore } from './store';
-import { createConfig, getConfig, updateConfig } from '@/api/config';
+import { createConfig, getConfig, updateConfig } from '@/api/config.js';
 
 const configStore = useConfigStore();
 const route = useRoute();
@@ -16,10 +16,9 @@ const isCreate = computed(() => {
 
 // 创建配置
 const addConfig = () => {
-    console.log(configStore.getConfigData());
     return createConfig(configStore.getConfigData()).then((res) => {
         if (res.data.code === 0) {
-            MessagePlugin.success('创建成功');
+            ElMessage({ message: '创建成功', type: 'success'});
             router.push('/config');
         } else {
             throw new Error(res.data.msg)
@@ -29,7 +28,14 @@ const addConfig = () => {
 
 // 更新配置
 const editConfig = () => {
-    console.log(configStore.getConfigData());
+    return updateConfig(route.params.slug, configStore.getConfigData()).then((res) => {
+        if (res.data.code === 0) {
+            ElMessage({ message: '编辑成功', type: 'success'});
+            router.push('/config');
+        } else {
+            throw new Error(res.data.msg)
+        }
+    });
 };
 
 // 创建 / 更新配置
@@ -54,6 +60,10 @@ onMounted(() => {
             router.go(-1);
         })
     }
+});
+
+onUnmounted(() => {
+    configStore.clear();
 });
 </script>
 

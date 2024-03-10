@@ -23,21 +23,14 @@ export default defineConfig({
   },
   server: {
     open: true,
-    port: 8080,
+    port: 5173,
     inline: true,
     // 开发环境，跨域配置
     proxy: {
-      '/user': {
+      '/api': {
         target: 'https://mdb.exia.xyz',
         changeOrigin: true,
-      },
-      '/config': {
-        target: 'https://mdb.exia.xyz',
-        changeOrigin: true,
-      },
-      '/site': {
-        target: 'https://mdb.exia.xyz',
-        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
       },
     }
   },

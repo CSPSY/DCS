@@ -2,7 +2,7 @@
  * @description 配置信息 hooks
  */
 import { reactive, ref } from "vue";
-import { getUserConfig } from "../api/config";
+import { getUserConfig, delConfig } from "../api/config";
 
 export const useConfigList = () => {
     const configList = ref([]);
@@ -30,9 +30,8 @@ export const useConfigList = () => {
     };
 
     // 分页操作
-    const onPageChange = (pagination) => {
-        configPagination.size = pagination.pageSize;
-        configPagination.current = pagination.current;
+    const onPageChange = (currentPage) => {
+        configPagination.current = currentPage;
         refreshConfigList();
     };
 
@@ -43,8 +42,21 @@ export const useConfigList = () => {
         refreshConfigList();
     };
 
+    // 删除操作
+    const handleDelete = (slug) => {
+        delConfig(slug).then((res) => {
+            if (res.data.code !== 0) {
+                throw new Error(res.data.msg)
+            }
+            ElMessage({message: '删除成功', type: 'success'});
+            refreshConfigList();
+        }).catch((e) => {
+            ElMessage.error(e.message)
+        });
+    }
+
     return {
         configList, configSearchText, configPagination,
-        refreshConfigList, onPageChange, handleSearch
+        refreshConfigList, onPageChange, handleSearch, handleDelete
     }
 };

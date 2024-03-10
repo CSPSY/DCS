@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, shallowRef } from 'vue';
+import { ref, onMounted, computed, watch, toRaw } from 'vue';
 import * as monaco from 'monaco-editor';
 import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
@@ -7,18 +7,44 @@ import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
 import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 import { useConfigStore } from '../store.js';
+import { useRoute } from 'vue-router';
 
 defineOptions({
     name: 'ConfigEditor'
 });
 
+const route = useRoute();
+const isCreate = computed(() => {
+    return route.name === 'config-create';
+});
+
+const props = defineProps(['value']);
+const emit = defineEmits(['update:value']);
+
 const configStore = useConfigStore();
 
 // 编辑器，Monaco Editor
 const editorRef = ref();
-const editor = shallowRef();
+const editor = ref();
+
+const createEditor = () => {
+    const editorInstance = monaco.editor.create(editorRef.value, {
+        value: configStore.content,
+        language: 'json',
+        theme: 'vs-dark',
+        automaticLayout: true,
+    });
+    
+    // 监听编辑器内容的变化，并将内容更新到 configStore 里
+    editorInstance.onDidChangeModelContent(() => {
+        configStore.updateContent(toRaw(editor.value).getValue());
+    });
+
+    editor.value = editorInstance;
+};
 
 onMounted(() => {
+    // 初始化 Monaco 环境
     self.MonacoEnvironment = {
         getWorker(_, label) {
             if (label === 'json') {
@@ -37,17 +63,18 @@ onMounted(() => {
         }
     }
 
-    editor.value = monaco.editor.create(editorRef.value, {
-        value: configStore.content,
-        language: 'json',
-        theme: 'vs-dark',
-        automaticLayout: true,
-    });
-    
-    // 监听编辑器内容的变化，并将内容更新到 configStore 里
-    editor.value.onDidChangeModelContent(() => {
-        configStore.updateContent(editor.value.getValue());
-    });
+    // 初始化数据
+    if (isCreate.value) {
+        createEditor();
+    } else {
+        watch(
+            () => configStore.content,
+            (newContent) => {
+                createEditor();
+            },
+            { once: true }
+        );
+    }
 });
 </script>
 

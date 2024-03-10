@@ -3,9 +3,6 @@ import { EditPen }  from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const jumpSite = () => {
-    router.push('/site');
-};
 </script>
 
 <template>
@@ -54,7 +51,7 @@ const jumpSite = () => {
                                 <div class="card-header" style="font-weight: 600;">
                                     <span>创建站点</span>
                                     <el-button style="height: 0;" class="button" text
-                                        @click="jumpSite"
+                                        @click="router.push('/site')"
                                     >
                                         <el-icon><EditPen /></el-icon>
                                     </el-button>
