@@ -8,7 +8,7 @@ export const useSiteList = () => {
     const sitePagination = reactive({
         total: 0,
         current: 1,
-        size: 6
+        size: 2
     });
 
     // 更新 site list 信息

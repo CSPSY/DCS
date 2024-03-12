@@ -5,14 +5,12 @@ import SiteEdit from './components/site-edit.vue';
 import { useSiteList } from '@/hooks/useSiteList.js';
 
 const siteStore = useSiteList();
-const { siteSearchText, siteList: siteData } = siteStore;
+const {
+    siteSearchText, siteList: siteData, current, sitePagination,
+    handleSearch, onPageChange, refreshSiteList, handleDelete
+} = siteStore;
 
-
-const editVisible = ref(false);
-const currentSiteItem = ref();
 const isReadOnly = ref(false);
-
-const inputSearch = ref('');
 
 // 新建站点对话框
 const isCreate = ref(true);
@@ -23,7 +21,7 @@ const handleCloseDialog = () => {
 };
 
 onMounted(() => {
-    siteStore.refreshSiteList();
+    refreshSiteList();
 });
 </script>
 
@@ -39,15 +37,24 @@ onMounted(() => {
                     <el-button type="primary" plain @click="createVisible = true">新建</el-button>
                     <site-edit
                         :isVisible="createVisible" :is-create="isCreate" :readonly="isReadOnly"
-                        @handleCloseDialog="handleCloseDialog" @confirm="siteStore.refreshSiteList"
+                        @handleCloseDialog="handleCloseDialog" @confirm="refreshSiteList"
                     />
                 </div>
-                <el-input v-model="inputSearch" placeholder="输入关键词，回车查找站点" clearable />
+                <el-input v-model="siteSearchText" placeholder="输入关键词，回车查找站点" @keyup.enter.native="handleSearch" clearable />
             </el-card>
         </div>
         <div class="content-bottom">
-            <site-list :data="siteData" @refresh="siteStore.refreshSiteList" @del="siteStore.handleDelete($event)"/>
+            <site-list :data="siteData" @refresh="refreshSiteList" @del="handleDelete($event)"/>
+            <el-pagination
+                v-model:current-page="current"
+                v-model:page-size="sitePagination.size"
+                :disabled="false"
+                layout="total, prev, pager, next, jumper"
+                :total="sitePagination.total"
+                @current-change="onPageChange"
+            />
         </div>
+
     </div>
 </template>
 
