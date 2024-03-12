@@ -43,9 +43,9 @@ export const useSiteList = () => {
                 throw new Error(res.data.msg);
             }
             ElMessage({message: '删除成功', type: 'success'});
-            refreshSiteList()
+            refreshSiteList();
         }).catch((err) => {
-            ElMessage.error(err.message)
+            ElMessage.error(err.message);
         });
     };
 

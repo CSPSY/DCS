@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, nextTick, watch, computed, onUnmounted } from 'vue';
+import { reactive, ref, nextTick, watch, computed, onUnmounted, readonly } from 'vue';
 import { useConfigList } from '@/hooks/useConfigList.js';
 import { createSite, updateSite } from '@/api/site.js';
 
@@ -7,7 +7,7 @@ defineOptions({
     name: 'SiteEdit'
 });
 
-const props = defineProps(['isCreate', 'isVisible']);
+const props = defineProps(['isCreate', 'isVisible', 'readonly', 'site']);
 const emit = defineEmits(['handleCloseDialog', 'confirm']);
 
 const actionText = computed(() => props.isCreate ? '创建' : '编辑');
@@ -41,13 +41,13 @@ const initSiteData = () => {
 };
 
 const unwatch = watch(
-  () => props.isVisible,
-  async (newVal) => {
-    if (newVal) {
-      initSiteData();
-      refreshConfigList();
+    () => props.isVisible,
+    async (newVal) => {
+        if (newVal) {
+            initSiteData();
+            refreshConfigList();
+        }
     }
-  }
 );;
 
 // 新建站点对话框
@@ -98,9 +98,8 @@ const handleConfirm = async () => {
     if (!isValid) {
         return;
     }
-    console.log(siteData);
-    const result = props.isCreate ? createSite({ ...siteData }) : updateSite((props.site)._id, { ...siteData });
 
+    const result = props.isCreate ? createSite({ ...siteData }) : updateSite((props.site)._id, { ...siteData });
     result.then(res => {
         if (res.data.code === 0) {
             ElMessage({ message: '操作成功', type: 'success' });
@@ -121,7 +120,7 @@ onUnmounted(unwatch);
 <template>
     <el-dialog v-model="visible" @close="emit('handleCloseDialog')" :title="`${actionText}站点`" width="600" draggable>
         <section class="input-area">
-            <el-form :model="siteData" :rules="formRules" ref="formRef" label-position="top">
+            <el-form :model="siteData" :rules="formRules" :disabled="props.readonly" ref="formRef" label-position="top">
                 <el-form-item label="站点名" prop="name">
                     <el-input v-model="siteData.name" placeholder="请输入"></el-input>
                 </el-form-item>
@@ -139,7 +138,7 @@ onUnmounted(unwatch);
                     <el-tag
                         v-for="tag in siteData.domains"
                         :key="tag"
-                        closable
+                        :closable="!props.readonly"
                         :disable-transitions="false"
                         @close="handleClose(tag)"
                     >
@@ -152,7 +151,7 @@ onUnmounted(unwatch);
                         @keyup.enter="handleInputConfirm"
                         @blur="handleInputConfirm"
                     />
-                    <el-button v-else class="button-new-tag" size="small" @click="showInput">
+                    <el-button v-else v-show="!props.readonly" class="button-new-tag" size="small" @click="showInput">
                         + 域名
                     </el-button>
                 </el-form-item>
@@ -160,10 +159,10 @@ onUnmounted(unwatch);
         </section>
         
         <template #footer>
-        <div class="dialog-footer">
-            <el-button @click="emit('handleCloseDialog')">取消</el-button>
-            <el-button type="primary" @click="handleConfirm">确认</el-button>
-        </div>
+            <div v-show="!props.readonly" class="dialog-footer">
+                <el-button @click="emit('handleCloseDialog')">取消</el-button>
+                <el-button type="primary" @click="handleConfirm">确认</el-button>
+            </div>
         </template>
     </el-dialog>
 </template>

@@ -24,7 +24,6 @@ const handleCloseDialog = () => {
 
 onMounted(() => {
     siteStore.refreshSiteList();
-    console.log(siteData)
 });
 </script>
 
@@ -39,7 +38,7 @@ onMounted(() => {
                     <!-- 新建站点 -->
                     <el-button type="primary" plain @click="createVisible = true">新建</el-button>
                     <site-edit
-                        :isVisible="createVisible" :is-create="isCreate"
+                        :isVisible="createVisible" :is-create="isCreate" :readonly="isReadOnly"
                         @handleCloseDialog="handleCloseDialog" @confirm="siteStore.refreshSiteList"
                     />
                 </div>
@@ -47,7 +46,7 @@ onMounted(() => {
             </el-card>
         </div>
         <div class="content-bottom">
-            <site-list :data="siteData" @refresh="siteStore.refreshSiteList"/>
+            <site-list :data="siteData" @refresh="siteStore.refreshSiteList" @del="siteStore.handleDelete($event)"/>
         </div>
     </div>
 </template>
