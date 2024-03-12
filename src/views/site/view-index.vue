@@ -38,7 +38,10 @@ onMounted(() => {
                     </span>
                     <!-- 新建站点 -->
                     <el-button type="primary" plain @click="createVisible = true">新建</el-button>
-                    <site-edit :isVisible="createVisible" :is-create="isCreate" @handleCloseDialog="handleCloseDialog"/>
+                    <site-edit
+                        :isVisible="createVisible" :is-create="isCreate"
+                        @handleCloseDialog="handleCloseDialog" @confirm="siteStore.refreshSiteList"
+                    />
                 </div>
                 <el-input v-model="inputSearch" placeholder="输入关键词，回车查找站点" clearable />
             </el-card>

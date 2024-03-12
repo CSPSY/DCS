@@ -21,11 +21,9 @@ export const createSite = (data) => {
         domains: data.domains.join(','),
         configs: data.configs.join(',')
     };
-    console.log('create body', body);
 
-    return;
-    // return API.post('/site/', qs.stringify(body));
-}
+    return API.post('/site/', qs.stringify(body));
+};
 
 // 获取具体站点信息
 export const getSite = (id) => {
@@ -39,11 +37,8 @@ export const updateSite = (id, data) => {
         configs: data.configs.join(',')
     };
 
-    console.log('update body', body);
-    return;
-
-    // return API.put(`/site/${id}`, qs.stringify(body));
-}
+    return API.put(`/site/${id}`, qs.stringify(body));
+};
 
 export const delSite = (id) => {
     return API.delete(`/site/${id}`);

@@ -8,7 +8,9 @@ defineOptions({
 });
 
 const props = defineProps(['isCreate', 'isVisible']);
-const emit = defineEmits(['handleCloseDialog']);
+const emit = defineEmits(['handleCloseDialog', 'confirm']);
+
+const actionText = computed(() => props.isCreate ? '创建' : '编辑');
 
 const visible = ref(false);
 const formRef = ref();
@@ -90,11 +92,34 @@ const handleInputConfirm = () => {
     inputValue.value = '';
 };
 
+// 确认新建 / 编辑站点
+const handleConfirm = async () => {
+    const isValid = await formRef.value.validate();
+    if (!isValid) {
+        return;
+    }
+    console.log(siteData);
+    const result = props.isCreate ? createSite({ ...siteData }) : updateSite((props.site)._id, { ...siteData });
+
+    result.then(res => {
+        if (res.data.code === 0) {
+            ElMessage({ message: '操作成功', type: 'success' });
+            // confirm： 刷新 siteList
+            emit('confirm');
+            emit('handleCloseDialog');
+        } else {
+            throw new Error(res.data.msg);
+        }
+    }).catch(err => {
+        ElMessage.error(err.message);
+    });
+};
+
 onUnmounted(unwatch);
 </script>
 
 <template>
-    <el-dialog v-model="visible" @close="emit('handleCloseDialog')" title="创建站点" width="600" draggable>
+    <el-dialog v-model="visible" @close="emit('handleCloseDialog')" :title="`${actionText}站点`" width="600" draggable>
         <section class="input-area">
             <el-form :model="siteData" :rules="formRules" ref="formRef" label-position="top">
                 <el-form-item label="站点名" prop="name">
@@ -137,7 +162,7 @@ onUnmounted(unwatch);
         <template #footer>
         <div class="dialog-footer">
             <el-button @click="emit('handleCloseDialog')">取消</el-button>
-            <el-button type="primary" @click="() => {console.log(formData)}">确认</el-button>
+            <el-button type="primary" @click="handleConfirm">确认</el-button>
         </div>
         </template>
     </el-dialog>
