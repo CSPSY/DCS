@@ -3,8 +3,10 @@ import { onMounted, watch } from 'vue';
 import HeaderNav from '@/components/layout/header-nav.vue';
 import { useGlobalStore } from '@/stores/store.js';
 import { getUserData } from './api/user';
+import { useRouter } from 'vue-router';
 
 const { userStore } = useGlobalStore();
+const router = useRouter();
 
 onMounted(() => {
     if (localStorage.getItem('DCS_TOKEN')) {
@@ -25,7 +27,7 @@ watch(
     () => userStore.isLogin,
     (newVal) => {
         if (!newVal) {
-            router.push('/')
+            router.push('/');
         }
     },
 );
