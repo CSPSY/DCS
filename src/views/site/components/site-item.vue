@@ -1,8 +1,23 @@
 <script setup>
+import { onMounted, computed } from 'vue';
+
 defineOptions({
     name: 'SiteItem'
 });
 
+const props = defineProps(['data']);
+
+const displayDomainText = computed(() => {
+    if (props.data.domains.length >= 1) {
+        return props.data.domains[0];
+    }
+
+    return '-';
+});
+
+onMounted(()=>{
+    console.log(props.data);
+})
 </script>
 
 <template>
@@ -10,7 +25,7 @@ defineOptions({
         <el-card :body-style="{ padding: '0px 6px', display: 'flex', alignItems: 'center', height: '100%', fontSize: '14px' }" shadow="never">
             <template #header>
                 <div class="card-header">
-                    <span>站点</span>
+                    <span>{{ props.data.name }}</span>
                     <el-popover placement="bottom-start" :width="120" trigger="hover">
                         <template #reference>
                             <el-button style="padding: 0; color: #0052d9;" text>操作</el-button>
@@ -25,10 +40,14 @@ defineOptions({
             </template>
             <div style="padding: 14px; display: flex; flex-direction: column; width: 100%;">
                 <div style="margin-bottom: 14px; display: flex; justify-content: space-between;">
-                    <el-tag :disable-transitions="true" type="success">域名</el-tag><span >http://localhost:8081/</span>
+                    <el-tag :disable-transitions="true" type="success">域名</el-tag>
+                    <span>
+                        {{ displayDomainText }}
+                        <el-tag v-if="data.domains.length > 1" round size="small">+{{ data.domains.length - 1 }}</el-tag>
+                    </span>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
-                    <el-tag :disable-transitions="true" type="success">配置数</el-tag><span>2</span>
+                    <el-tag :disable-transitions="true" type="success">配置数</el-tag><span>{{ props.data.configs.length }}</span>
                 </div>
             </div>
         </el-card>

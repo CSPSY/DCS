@@ -26,7 +26,7 @@ export const useConfigList = () => {
         configList.value = res?.data?.data?.items || [];
         configPagination.total = res?.data?.data?.total ?? 0; //?? 0：空值合并操作符，如果res?.data?.data?.total的值是undefined，则使用默认值0。
 
-        return res
+        return res;
     };
 
     // 分页操作
@@ -53,10 +53,10 @@ export const useConfigList = () => {
         }).catch((e) => {
             ElMessage.error(e.message)
         });
-    }
+    };
 
     return {
         configList, configSearchText, configPagination,
         refreshConfigList, onPageChange, handleSearch, handleDelete
-    }
+    };
 };
