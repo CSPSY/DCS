@@ -11,7 +11,7 @@ const APISSO = axios.create({
 
 // dcs 接口
 const API = axios.create({
-    baseURL: '/api'
+    baseURL: ENV.API
 });
 
 // API 请求拦截器
