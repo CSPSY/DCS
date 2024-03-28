@@ -26,7 +26,8 @@ const routes = [
         name: 'config',
         meta: {
             title: '配置管理',
-            menuKey: '/config'
+            menuKey: '/config',
+            needAuth: true,
         },
         children: [
             {
@@ -35,7 +36,8 @@ const routes = [
                 component: () => import('@/views/config/view-index.vue'),
                 meta: {
                     title: '配置管理',
-                    menuKey: '/config'
+                    menuKey: '/config',
+                    needAuth: true,
                 }
             },
             {
@@ -44,7 +46,8 @@ const routes = [
                 component: () => import('@/views/config/config-edit/view-index.vue'),
                 meta: {
                     title: '创建配置',
-                    menuKey: '/config'
+                    menuKey: '/config',
+                    needAuth: true,
                 }
             },
             {
@@ -53,7 +56,8 @@ const routes = [
                 component: () => import('@/views/config/config-edit/view-index.vue'),
                 meta: {
                     title: '编辑配置',
-                    menuKey: '/config'
+                    menuKey: '/config',
+                    needAuth: true,
                 }
             }
         ]
@@ -63,7 +67,8 @@ const routes = [
         name: 'site',
         component: () => import('@/views/site/view-index.vue'),
         meta: {
-            title: '站点'
+            title: '站点',
+            needAuth: true,
         }
     }
 ];
@@ -73,9 +78,13 @@ const router = createRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
+    const { menuStore, userStore } = useGlobalStore();
+    
+    if (to.meta.needAuth && !userStore.isLogin ) {
+        return { name: 'home' };
+    }
     // 是否展示顶部选项，   登录部分不展示
-    const { menuStore } = useGlobalStore();
     if (to.name === 'login') {
         menuStore.setShowValue(false);
     } else {
@@ -86,7 +95,6 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = 'DCS | ' + to.meta.title;
     }
-    next();
 });
 
 export { router };
