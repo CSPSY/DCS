@@ -16,7 +16,6 @@ const currentSiteItem = ref();
 const isReadonly = ref(false);
 
 const handleSelectSite = (type, item) => {
-    console.log('item', item);
     currentSiteItem.value = item;
     isReadonly.value = type === 'inspect';
     editVisible.value = true;

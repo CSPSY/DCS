@@ -18,7 +18,7 @@ export const useUserStore = defineStore('user', () => {
         userInfo.email = data.email
         userInfo.id = data.id
         isLogin.value = true
-    }
+    };
 
     const logout = () => {
         userInfo.avator = '';
