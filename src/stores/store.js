@@ -4,7 +4,7 @@
 import { defineStore } from "pinia";
 import { useMenuStore } from "./useMenu.js";
 import { useUserStore } from "./useUser.js";
-import { useStorageStore } from './useStorage';
+import { useStorageStore } from './useStorage.js';
 
 export const useGlobalStore = defineStore('global', () => {
     const menuStore = useMenuStore();

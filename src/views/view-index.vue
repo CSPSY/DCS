@@ -1,6 +1,24 @@
 <script setup>
+import { onMounted, reactive } from 'vue';
 import { EditPen }  from '@element-plus/icons-vue';
 import { useRouter } from 'vue-router';
+import { getIndexCardInfo } from '../api/util.js';
+
+const cardInfo = reactive({
+    login: '',
+    config: '',
+    site: '',
+});
+
+onMounted(() => {
+    getIndexCardInfo().then(res => {
+        if (typeof res.data !== 'undefined') {
+            cardInfo.login = res.data.login;
+            cardInfo.config = res.data.config;
+            cardInfo.site = res.data.site;
+        }
+    });
+});
 
 const router = useRouter();
 </script>
@@ -25,7 +43,7 @@ const router = useRouter();
                             <template #header>
                                 <div class="card-header" style="font-weight: 600;"><span>登录</span></div>
                             </template>
-                            <div style="font-size: 14px;">点击右上角以进行登录。</div>
+                            <div style="font-size: 14px;">{{ cardInfo.login }}</div>
                         </el-card>
                     </el-col>
                     <el-col :span="8">
@@ -40,9 +58,7 @@ const router = useRouter();
                                     </el-button>
                                 </div>
                             </template>
-                            <div style="font-size: 14px;">
-                                创建一个配置，支持JSON格式。
-                            </div>
+                            <div style="font-size: 14px;">{{ cardInfo.config }}</div>
                         </el-card>
                     </el-col>
                     <el-col :span="8">
@@ -58,7 +74,7 @@ const router = useRouter();
                                 </div>
                             </template>
                             <div style="font-size: 14px;">
-                                创建一个站点，并输入域名、关联配置。<br/>配置关联后，只有该域名才能访问对应配置。
+                                {{ cardInfo.site }}
                             </div>
                         </el-card>
                     </el-col>

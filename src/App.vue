@@ -12,7 +12,7 @@ onMounted(() => {
     if (localStorage.getItem('DCS_TOKEN')) {
         getUserData().then((res) => {
             if (res.data.code !== 0) {
-                return;
+                throw new Error(res.data.msg);
             }
             userStore.login({
                 ...res.data?.data

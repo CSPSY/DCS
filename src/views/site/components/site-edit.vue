@@ -48,7 +48,7 @@ const unwatch = watch(
             refreshConfigList();
         }
     }
-);;
+);
 
 // 新建站点对话框
 const siteData = reactive({
